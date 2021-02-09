@@ -113,21 +113,19 @@ class Solution
 
     private static void UpdateGrid(List<Tuple<int, int>> readyToExplode, Dictionary<int, List<char>> splitGrid, int totalUpdates)
     {
-        for (var secondElapsed = 1; secondElapsed <= totalUpdates; secondElapsed++)
+        // Jump to explosions 
+        for (var secondElapsed = 3; secondElapsed <= totalUpdates; secondElapsed += 2)
         {
-            if (secondElapsed % 2 != 0 && secondElapsed != 1)
+            foreach (var bomb in readyToExplode)
             {
-                foreach (var bomb in readyToExplode)
-                {
-                    // Blow time
-                    Explode(bomb, splitGrid);
-                }
-
-                readyToExplode.Clear();
-
-                //Plant bombs
-                PlantBombs(splitGrid, readyToExplode);
+                // Blow armed bombs
+                Explode(bomb, splitGrid);
             }
+
+            readyToExplode.Clear();
+
+            //Plant bombs
+            PlantBombs(splitGrid, readyToExplode);
         }
     }
 
